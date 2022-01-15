@@ -1,0 +1,110 @@
+@model IMSRepo.ViewModels.SOVM
+
+
+@{
+  ViewBag.Title = "Create";
+}
+
+
+
+<!-- left column -->
+<div class="col-md-12">
+  <!-- general form elements -->
+  <div class="card card-warning">
+    <div class="card-header">
+      <h3 class="card-title">Add Location</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+
+    @using (Html.BeginForm())
+    {
+      @Html.AntiForgeryToken()
+
+      <div class="card-body">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+          Customers
+
+          @Html.DropDownList("Customers", null, null, htmlAttributes: new { @class = "form-control" })
+          @*@Html.ValidationMessageFor(model => model.LocationName, "", new { @class = "text-danger" })*@
+
+        </div>
+
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.LocationId, htmlAttributes: new { @class = "" })
+
+            @Html.EditorFor(model => model.LocationId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
+
+          </div>*@
+
+
+
+
+        <table id="saleReciept">
+          <thead>
+            <tr>
+              <th>ProductId</th>
+              <th>SalePrice</th>
+              <th>Qty</th>
+              <th>Amount</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" id="pord" class="pord" /> </td>
+
+
+              <td><input type="text" id="sale" class="sale" /> </td>
+
+              <td><input type="text" id="qtyd" class="qtyd" /> </td>
+
+              <td><input type="text" id="amount" class="amount" /> </td>
+
+              <td><button id="del" class="del">del</button> </td>
+            </tr>
+          </tbody>
+
+        </table>
+        <button id="addrow" class="addrow">Add</button>
+
+
+        <hr />
+        <div class="form-group">
+          <div class="class=" card-footer">
+            <input type="submit" value="Add" class="btn btn-warning" style="width: 180px; margin-left:auto;margin-right:auto;display:block;margin-top:auto;margin-bottom:0%" />
+          </div>
+        </div>
+        <br />
+        <div>
+          @Html.ActionLink("Back to List", "Index")
+        </div>
+      </div>
+    }
+
+
+  </div>
+
+</div>
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+
+    $("#addrow").click(function (e){
+      alert("123");
+      var row = '<tr><td><input type="text" id="pord" class="pord" /> </td><td><input type="text" id="sale" class="sale" /> </td><td><input type="text" id="qtyd" class="qtyd" /> </td><td><input type="text" id="amount" class="amount" /> </td><td><button id="del" class="del">del</button> </td></tr>';
+      $("#saleReciept").append(row);
+
+
+    });
+
+
+  });
+</script>
+

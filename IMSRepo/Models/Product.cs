@@ -17,15 +17,17 @@ namespace IMSRepo.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.SOes = new HashSet<SO>();
+            this.SODs = new HashSet<SOD>();
         }
     
         public string Id { get; set; }
         public string Name { get; set; }
         public Nullable<decimal> PurchasePrice { get; set; }
         public Nullable<decimal> SalePrice { get; set; }
+        public string SupplierId { get; set; }
     
+        public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SO> SOes { get; set; }
+        public virtual ICollection<SOD> SODs { get; set; }
     }
 }

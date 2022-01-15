@@ -5,11 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b845e32760654993b043fd2f592b514c" Name="Diagram1">
-        <EntityTypeShape EntityType="IMSModel.Customer" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="IMSModel.Product" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="IMSModel.SO" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <AssociationConnector Association="IMSModel.FK_SO_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="IMSModel.FK_SO_Product" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="IMSModel.Customer" Width="1.5" PointX="0.75" PointY="5.5" />
+        <EntityTypeShape EntityType="IMSModel.MySO" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="IMSModel.Product" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="IMSModel.SOD" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="IMSModel.Supplier" Width="1.5" PointX="0.75" PointY="1.5" />
+        <AssociationConnector Association="IMSModel.FK_MySO_Customer" />
+        <AssociationConnector Association="IMSModel.FK_SOD_MySO" />
+        <AssociationConnector Association="IMSModel.FK_Product_Supplier" />
+        <AssociationConnector Association="IMSModel.FK_SO_Product" />
+        <EntityTypeShape EntityType="IMSModel.Employee" Width="1.5" PointX="5.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

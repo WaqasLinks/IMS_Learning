@@ -1,4 +1,4 @@
-﻿using IMSRepo.Models;
+using IMSRepo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace IMS.Controllers
     {
         // GET: Customers
         private IMSEntities db = new IMSEntities();
-        public ActionResult CustomersList()
+        public ActionResult Index()
         {
             List<Customer> customers = db.Customers.ToList();
 

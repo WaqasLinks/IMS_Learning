@@ -26,7 +26,10 @@ namespace IMSRepo.Models
         }
     
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<MySO> MySOes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<SO> SOes { get; set; }
+        public virtual DbSet<SOD> SODs { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
     }
 }

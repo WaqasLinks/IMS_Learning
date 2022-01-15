@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="IMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="IMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -14,6 +14,31 @@
           <Property Name="Address" Type="nvarchar" MaxLength="500" />
           <Property Name="Phone" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="500" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Designation" Type="nvarchar" MaxLength="500" />
+          <Property Name="NIC" Type="nvarchar" MaxLength="500" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="500" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="MySO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CustomerId" Type="nvarchar" MaxLength="128" />
+          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaidAmout" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SODate" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
@@ -22,127 +47,253 @@
           <Property Name="Name" Type="nvarchar" MaxLength="500" />
           <Property Name="PurchasePrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="SalePrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SupplierId" Type="nvarchar" MaxLength="128" />
         </EntityType>
-        <EntityType Name="SO">
+        <EntityType Name="SOD">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="CustomerId" Type="nvarchar" MaxLength="128" />
           <Property Name="ProductId" Type="nvarchar" MaxLength="128" />
           <Property Name="TotalAmont" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="VAT" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SODate" Type="datetime" />
+          <Property Name="ModfiedDate" Type="datetime" />
+          <Property Name="MySoId" Type="nvarchar" MaxLength="128" />
         </EntityType>
-        <Association Name="FK_SO_Customer">
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <Association Name="FK_MySO_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="SO" Type="Self.SO" Multiplicity="*" />
+          <End Role="MySO" Type="Self.MySO" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="SO">
+            <Dependent Role="MySO">
               <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SupplierId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SO_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="SO" Type="Self.SO" Multiplicity="*" />
+          <End Role="SOD" Type="Self.SOD" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="SO">
+            <Dependent Role="SOD">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOD_MySO">
+          <End Role="MySO" Type="Self.MySO" Multiplicity="0..1" />
+          <End Role="SOD" Type="Self.SOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MySO">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SOD">
+              <PropertyRef Name="MySoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="IMSModelStoreContainer">
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MySO" EntityType="Self.MySO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SO" EntityType="Self.SO" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_SO_Customer" Association="Self.FK_SO_Customer">
+          <EntitySet Name="SOD" EntityType="Self.SOD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MySO_Customer" Association="Self.FK_MySO_Customer">
             <End Role="Customer" EntitySet="Customer" />
-            <End Role="SO" EntitySet="SO" />
+            <End Role="MySO" EntitySet="MySO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Supplier" Association="Self.FK_Product_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="FK_SO_Product" Association="Self.FK_SO_Product">
             <End Role="Product" EntitySet="Product" />
-            <End Role="SO" EntitySet="SO" />
+            <End Role="SOD" EntitySet="SOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOD_MySO" Association="Self.FK_SOD_MySO">
+            <End Role="MySO" EntitySet="MySO" />
+            <End Role="SOD" EntitySet="SOD" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="IMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="IMSModel.Customer" />
+          <EntitySet Name="MySOes" EntityType="IMSModel.MySO" />
+          <EntitySet Name="Products" EntityType="IMSModel.Product" />
+          <EntitySet Name="SODs" EntityType="IMSModel.SOD" />
+          <EntitySet Name="Suppliers" EntityType="IMSModel.Supplier" />
+          <AssociationSet Name="FK_MySO_Customer" Association="IMSModel.FK_MySO_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="MySO" EntitySet="MySOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOD_MySO" Association="IMSModel.FK_SOD_MySO">
+            <End Role="MySO" EntitySet="MySOes" />
+            <End Role="SOD" EntitySet="SODs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Supplier" Association="IMSModel.FK_Product_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SO_Product" Association="IMSModel.FK_SO_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="SOD" EntitySet="SODs" />
+          </AssociationSet>
+          <EntitySet Name="Employees" EntityType="IMSModel.Employee" />
+        </EntityContainer>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SOes" Relationship="Self.FK_SO_Customer" FromRole="Customer" ToRole="SO" />
+          <NavigationProperty Name="MySOes" Relationship="IMSModel.FK_MySO_Customer" FromRole="Customer" ToRole="MySO" />
+        </EntityType>
+        <EntityType Name="MySO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaidAmout" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SODate" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="IMSModel.FK_MySO_Customer" FromRole="MySO" ToRole="Customer" />
+          <NavigationProperty Name="SODs" Relationship="IMSModel.FK_SOD_MySO" FromRole="MySO" ToRole="SOD" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="SalePrice" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="SOes" Relationship="Self.FK_SO_Product" FromRole="Product" ToRole="SO" />
+          <Property Name="SupplierId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Supplier" Relationship="IMSModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
+          <NavigationProperty Name="SODs" Relationship="IMSModel.FK_SO_Product" FromRole="Product" ToRole="SOD" />
         </EntityType>
-        <EntityType Name="SO">
+        <EntityType Name="SOD">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CustomerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ProductId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="TotalAmont" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_SO_Customer" FromRole="SO" ToRole="Customer" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_SO_Product" FromRole="SO" ToRole="Product" />
+          <Property Name="VAT" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SODate" Type="DateTime" Precision="3" />
+          <Property Name="ModfiedDate" Type="DateTime" Precision="3" />
+          <Property Name="MySoId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MySO" Relationship="IMSModel.FK_SOD_MySO" FromRole="SOD" ToRole="MySO" />
+          <NavigationProperty Name="Product" Relationship="IMSModel.FK_SO_Product" FromRole="SOD" ToRole="Product" />
         </EntityType>
-        <Association Name="FK_SO_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="SO" Type="Self.SO" Multiplicity="*" />
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="IMSModel.FK_Product_Supplier" FromRole="Supplier" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_MySO_Customer">
+          <End Type="IMSModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="IMSModel.MySO" Role="MySO" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="SO">
+            <Dependent Role="MySO">
               <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SOD_MySO">
+          <End Type="IMSModel.MySO" Role="MySO" Multiplicity="0..1" />
+          <End Type="IMSModel.SOD" Role="SOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MySO">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SOD">
+              <PropertyRef Name="MySoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Supplier">
+          <End Type="IMSModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="IMSModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SO_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="SO" Type="Self.SO" Multiplicity="*" />
+          <End Type="IMSModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="IMSModel.SOD" Role="SOD" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="SO">
+            <Dependent Role="SOD">
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="IMSEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Customers" EntityType="Self.Customer" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="SOes" EntityType="Self.SO" />
-          <AssociationSet Name="FK_SO_Customer" Association="Self.FK_SO_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="SO" EntitySet="SOes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SO_Product" Association="Self.FK_SO_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="SO" EntitySet="SOes" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NIC" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -151,30 +302,72 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="IMSModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MySOes">
+            <EntityTypeMapping TypeName="IMSModel.MySO">
+              <MappingFragment StoreEntitySet="MySO">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="SODate" ColumnName="SODate" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="PaidAmout" ColumnName="PaidAmout" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="IMSModel.Product">
               <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SOes">
-            <EntityTypeMapping TypeName="IMSModel.SO">
-              <MappingFragment StoreEntitySet="SO">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <EntitySetMapping Name="SODs">
+            <EntityTypeMapping TypeName="IMSModel.SOD">
+              <MappingFragment StoreEntitySet="SOD">
+                <ScalarProperty Name="MySoId" ColumnName="MySoId" />
+                <ScalarProperty Name="ModfiedDate" ColumnName="ModfiedDate" />
+                <ScalarProperty Name="SODate" ColumnName="SODate" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="VAT" ColumnName="VAT" />
                 <ScalarProperty Name="TotalAmont" ColumnName="TotalAmont" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="IMSModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="IMSModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="NIC" ColumnName="NIC" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

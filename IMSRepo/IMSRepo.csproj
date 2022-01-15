@@ -54,6 +54,9 @@
     <Compile Include="Models\Customer.cs">
       <DependentUpon>IMSModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>IMSModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IMSModels.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -69,13 +72,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IMSModels.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\MySO.cs">
+      <DependentUpon>IMSModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Product.cs">
       <DependentUpon>IMSModels.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SO.cs">
+    <Compile Include="Models\SOD.cs">
+      <DependentUpon>IMSModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Supplier.cs">
       <DependentUpon>IMSModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\SOVM.cs" />
+    <Compile Include="ViewModels\Summary.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Models\IMSModels.edmx">

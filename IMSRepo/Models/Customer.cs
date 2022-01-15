@@ -17,7 +17,7 @@ namespace IMSRepo.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
-            this.SOes = new HashSet<SO>();
+            this.MySOes = new HashSet<MySO>();
         }
     
         public string Id { get; set; }
@@ -26,6 +26,6 @@ namespace IMSRepo.Models
         public string Phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SO> SOes { get; set; }
+        public virtual ICollection<MySO> MySOes { get; set; }
     }
 }
