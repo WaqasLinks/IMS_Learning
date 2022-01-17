@@ -56,7 +56,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr id="rowNo1">
               <td><input type="text" id="pord" class="pord" /> </td>
 
 
@@ -66,12 +66,12 @@
 
               <td><input type="text" id="amount" class="amount" /> </td>
 
-              <td><button id="del" class="del">del</button> </td>
+              <td><button type="button" id="del1" class="del">del</button> </td>
             </tr>
           </tbody>
 
         </table>
-        <button id="addrow" class="addrow">Add</button>
+        <button type="button" id="addrow" class="addthisrow">Add</button>
 
 
         <hr />
@@ -93,13 +93,25 @@
 </div>
 
 <script type="text/javascript">
-
+  var serialNum = 1;
   $(document).ready(function () {
+    
+    $("#addrow").click(function (e) {
+      //alert("123");
+      serialNum += 1;
+      var row = '<tr id="rowNo' + serialNum + '"><td><input type="text" id="pord" class="pord" /> </td><td><input type="text" id="sale" class="sale" /> </td><td><input type="text" id="qtyd" class="qtyd" /> </td><td><input type="text" id="amount" class="amount" /> </td><td><button type="button" id="del' + serialNum + '" class="del">del</button> </td></tr>';
 
-    $("#addrow").click(function (e){
-      alert("123");
-      var row = '<tr><td><input type="text" id="pord" class="pord" /> </td><td><input type="text" id="sale" class="sale" /> </td><td><input type="text" id="qtyd" class="qtyd" /> </td><td><input type="text" id="amount" class="amount" /> </td><td><button id="del" class="del">del</button> </td></tr>';
+      //alert(row);
+
       $("#saleReciept").append(row);
+    });
+
+    $('#del' + serialNum).click(function () {
+
+      alert('abc');
+      
+      $(this).parents("tr").remove();
+      /*$("#saleReciept").append(row);*/
 
 
     });
