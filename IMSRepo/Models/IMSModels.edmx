@@ -31,6 +31,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="InvoiceNo" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="CustomerId" Type="nvarchar" MaxLength="128" />
           <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PaidAmout" Type="decimal" Precision="18" Scale="2" />
@@ -195,6 +196,7 @@
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Customer" Relationship="IMSModel.FK_MySO_Customer" FromRole="MySO" ToRole="Customer" />
           <NavigationProperty Name="SODs" Relationship="IMSModel.FK_SOD_MySO" FromRole="MySO" ToRole="SOD" />
+          <Property Name="InvoiceNo" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -312,6 +314,7 @@
           <EntitySetMapping Name="MySOes">
             <EntityTypeMapping TypeName="IMSModel.MySO">
               <MappingFragment StoreEntitySet="MySO">
+                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
                 <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="SODate" ColumnName="SODate" />
