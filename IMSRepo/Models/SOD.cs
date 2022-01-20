@@ -22,6 +22,7 @@ namespace IMSRepo.Models
         public Nullable<System.DateTime> SODate { get; set; }
         public Nullable<System.DateTime> ModfiedDate { get; set; }
         public string MySoId { get; set; }
+        public Nullable<decimal> QTY { get; set; }
     
         public virtual MySO MySO { get; set; }
         public virtual Product Product { get; set; }

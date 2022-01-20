@@ -2147,6 +2147,7 @@
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\jquery.mcautocomplete.js" />
     <Content Include="Scripts\knockout-3.5.0.debug.js" />
     <Content Include="Scripts\knockout-3.5.0.js" />
     <Content Include="Scripts\knockout.validation.js" />

@@ -25,6 +25,8 @@ namespace IMSRepo.Models
         public Nullable<decimal> PurchasePrice { get; set; }
         public Nullable<decimal> SalePrice { get; set; }
         public string SupplierId { get; set; }
+        public Nullable<decimal> ProductNo { get; set; }
+        public Nullable<decimal> Stock { get; set; }
     
         public virtual Supplier Supplier { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

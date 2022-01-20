@@ -14,14 +14,15 @@ namespace IMS.Controllers
     // GET: SOVM
     public ActionResult Create()
     {
-      decimal maxId= db.MySOes.DefaultIfEmpty().Max(x => x == null ? 0 : x.InvoiceNo);
+      decimal maxId= db.MySOes.Max(x => x == null ? 0 : x.InvoiceNo);
       maxId = maxId + 1;
 
       //SOVM sovm = new SOVM();
       ViewBag.InvoiceNo1 = maxId;
       ViewBag.Customers = new SelectList(db.Customers, "Id", "Name");
-      ViewBag.Products = new SelectList(db.Products, "Id", "Name");
-      
+      //ViewBag.Products = new SelectList(db.Products, "Id", "Name");
+      ViewBag.Products = db.Products;
+
       return View();
     }
   }

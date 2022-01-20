@@ -45,9 +45,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProductNo" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Name" Type="nvarchar" MaxLength="500" />
           <Property Name="PurchasePrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="SalePrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Stock" Type="decimal" Precision="18" Scale="0" />
           <Property Name="SupplierId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="SOD">
@@ -56,6 +58,7 @@
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="ProductId" Type="nvarchar" MaxLength="128" />
+          <Property Name="QTY" Type="decimal" Precision="18" Scale="0" />
           <Property Name="TotalAmont" Type="decimal" Precision="18" Scale="2" />
           <Property Name="VAT" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
@@ -209,6 +212,8 @@
           <Property Name="SupplierId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Supplier" Relationship="IMSModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
           <NavigationProperty Name="SODs" Relationship="IMSModel.FK_SO_Product" FromRole="Product" ToRole="SOD" />
+          <Property Name="ProductNo" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Stock" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="SOD">
           <Key>
@@ -224,6 +229,7 @@
           <Property Name="MySoId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MySO" Relationship="IMSModel.FK_SOD_MySO" FromRole="SOD" ToRole="MySO" />
           <NavigationProperty Name="Product" Relationship="IMSModel.FK_SO_Product" FromRole="SOD" ToRole="Product" />
+          <Property Name="QTY" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -329,6 +335,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="IMSModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="ProductNo" ColumnName="ProductNo" />
                 <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
                 <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
@@ -340,6 +348,7 @@
           <EntitySetMapping Name="SODs">
             <EntityTypeMapping TypeName="IMSModel.SOD">
               <MappingFragment StoreEntitySet="SOD">
+                <ScalarProperty Name="QTY" ColumnName="QTY" />
                 <ScalarProperty Name="MySoId" ColumnName="MySoId" />
                 <ScalarProperty Name="ModfiedDate" ColumnName="ModfiedDate" />
                 <ScalarProperty Name="SODate" ColumnName="SODate" />
@@ -388,7 +397,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
