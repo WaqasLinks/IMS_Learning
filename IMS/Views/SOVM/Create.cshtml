@@ -53,7 +53,7 @@
         <table id="saleReciept">
           <thead>
             <tr>
-              <th>ProductId</th>
+              <th>ProductName</th>
               <th>SalePrice</th>
               <th>Qty</th>
               <th>Amount</th>
@@ -121,6 +121,7 @@
       //alert(clickedIdNum);
 
   OnTypeName('#prod' + clickedIdNum);
+
   function OnTypeName(param) {
     //alert(products);
     //alert(clickedTextboxId);
@@ -150,7 +151,7 @@
         $('#qty' + clickedIdNum).val(ui.item ? 1 : '');
 
         //document.getElementById(clickedTextboxId).focus();
-        //update_itemTotal();
+        update_itemTotal();
         //FetchProductRentStatus();
         return false;
       }
@@ -161,36 +162,85 @@
   }
 
 
+  function update_itemTotal() {
+    var ItemsTotal = 0;
 
+    var orderQty = 0;
+    var orderQtyPiece = 0;
+    var returnQty = 0;
+    var returnQtyPiece = 0;
+    var SN = 0;
+
+    $('#saleReciept > tbody  > tr').each(function () {
+
+      var prodName = $(this).find("[id^='prod']").val();
+      var myCount = 0;
+      $('#saleReciept > tbody  > tr').each(function () {
+        
+        var prodName2 = $(this).find("[id^='prod']").val();
+        if (prodName2 == prodName) {
+          myCount += 1;
+        }
+
+        if (myCount > 1) {
+          alert('product already selected');
+        }
+
+      });
+
+
+
+
+      var qty = 0;
+      var sale = 0;
+        qty = $(this).find("[id^='qty']").val();
+        //if (!(qty)) { qty = 0; }
+        sale = $(this).find("[id^='sale']").val();
+        var itemAmount = (qty * sale);
+        $(this).find("[id^='amount']").val(itemAmount.toFixed(2));
+
+    });
+
+  }
+
+
+ 
   $(document).ready(function () {
+    bodyEvent();
 
     $("#addrow").click(function (e) {
       //alert("123");
       serialNum += 1;
-      var row = '<tr id="rowNo' + serialNum + '"><td><input type="text" id="prod" class="prod" /> </td><td><input type="text" id="sale" class="sale" /> </td><td><input type="text" id="qtyd" class="qtyd" /> </td><td><input type="text" id="amount" class="amount" /> </td><td><button type="button" id="del' + serialNum + '" class="del">del</button> </td></tr>';
+      var row = '<tr id="rowNo' + serialNum + '"><td><input type="text" id="prod' + serialNum + '" class="prod" /> </td><td><input type="text" id="sale' + serialNum + '" class="sale" /> </td><td><input type="text" id="qty' + serialNum + '" class="qty" /> </td><td><input type="text" id="amount' + serialNum + '" class="amount" /> </td><td><button type="button" id="del' + serialNum + '" class="del">del</button> </td></tr>';
 
       //alert(row);
 
       $("#saleReciept").append(row);
 
+      bodyEvent();
+      OnTypeName('#prod' + serialNum);
+
+
+    });
+
+    function bodyEvent() {
       $("#del" + serialNum).click(function () {
 
         $(this).parents("tr").remove();
         /*$("#saleReciept").append(row);*/
       });
 
-      OnTypeName('#prod' + serialNum);
+      $('#qty' + serialNum).keyup(function () {
+        update_itemTotal();
+      });
 
+      $('#sale' + serialNum).keyup(function () {
+        update_itemTotal();
+      });
 
-    });
+    }
 
-    $("#del" + serialNum).click(function () {
-
-      $(this).parents("tr").remove();
-      /*$("#saleReciept").append(row);*/
-    });
-
-
+    
 
 
   });
