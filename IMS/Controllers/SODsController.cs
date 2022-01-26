@@ -52,7 +52,7 @@ namespace IMS.Controllers
     // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    //public ActionResult Create([Bind(Include = "Id,CustomerId,ProductId,TotalAmont,SODate")] SO sO)
+    //public ActionResult Create([Bind(Include = "Id,CustomerId,ProductId,ItemTotal,SODate")] SO sO)
     public ActionResult Create(SOD sod)
     {
 
@@ -101,7 +101,7 @@ namespace IMS.Controllers
     // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Include = "Id,CustomerId,ProductId,TotalAmont,SODate")] SOD sod)
+    public ActionResult Edit([Bind(Include = "Id,CustomerId,ProductId,ItemTotal,SODate")] SOD sod)
     {
       
         db.Entry(sod).State = EntityState.Modified;

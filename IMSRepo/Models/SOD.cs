@@ -16,13 +16,13 @@ namespace IMSRepo.Models
     {
         public string Id { get; set; }
         public string ProductId { get; set; }
-        public Nullable<decimal> TotalAmont { get; set; }
         public Nullable<decimal> VAT { get; set; }
         public Nullable<decimal> Discount { get; set; }
         public Nullable<System.DateTime> SODate { get; set; }
         public Nullable<System.DateTime> ModfiedDate { get; set; }
         public string MySoId { get; set; }
         public Nullable<decimal> QTY { get; set; }
+        public Nullable<decimal> ItemTotal { get; set; }
     
         public virtual MySO MySO { get; set; }
         public virtual Product Product { get; set; }

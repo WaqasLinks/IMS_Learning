@@ -47,12 +47,13 @@
         <div>
           Invoice No.
           @*@Html.EditorFor(model => model.MySO.InvoiceNo, new { htmlAttributes = new { @class = "", @value = ViewBag.InvoiceNo1, @readonly = "readonly" } })*@
-          <input type="text" value="@ViewBag.InvoiceNo1" readonly />
+          <input type="text" value="@ViewBag.InvoiceNo1" name="MySO.InvoiceNo" readonly />
         </div>
 
         <table id="saleReciept">
           <thead>
             <tr>
+              <th></th>
               <th>ProductName</th>
               <th>SalePrice</th>
               <th>Qty</th>
@@ -61,26 +62,52 @@
             </tr>
           </thead>
           <tbody>
-            <tr id="rowNo1">
-              <td><input type="text" id="prod1" class="prod" /> </td>
-              <td><input type="text" id="sale1" class="sale" /> </td>
+            <tr id="rowNo0">
+              <td><input type="hidden" name="SODs.Index" value="0" /></td>
+              @*<td style="display:none;"><input type="text" readonly class="form-control classBGcolor" name="SaleOrderDetail[0].ProductId" id="idn0"></td>*@
+              <td><input type="text" id="prod0" class="prod" name="SODs[0].Product.Name" /> </td>
+              <td><input type="text" id="sale0" class="sale" name="SODs[0].Product.SalePrice" /> </td>
 
-              <td><input type="text" id="qty1" class="qty" /> </td>
+              <td><input type="text" id="qty0" class="qty" name="SODs[0].QTY" /> </td>
 
-              <td><input type="text" id="amount1" class="amount" /> </td>
+              <td><input type="text" id="amount0" class="amount" name="SODs[0].ItemTotal" readonly /> </td>
 
-              <td><button type="button" id="del1" class="del">del</button> </td>
+              <td><button type="button" id="del0" class="del">del</button> </td>
             </tr>
           </tbody>
 
         </table>
         <button type="button" id="addrow" class="addthisrow">Add</button>
 
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input readonly type="text" id="prod_d" class="classBorder0" /> </td>
+              <td><input readonly type="text" id="sale_d" class="classBorder0" /> </td>
+
+              <td><input readonly type="text" id="qty_d" class="classBorder0" /> </td>
+
+              <td><input readonly type="text" id="totalAmount" class="" name="MySO.TotalAmount" /> </td>
+
+              <td>@*<button type="button" id="del_d" class="del">del</button>*@ </td>
+            </tr>
+          </tbody>
+        </table>
 
         <hr />
         <div class="form-group">
           <div class="class=" card-footer">
-            <input type="submit" value="Add" class="btn btn-warning" style="width: 180px; margin-left:auto;margin-right:auto;display:block;margin-top:auto;margin-bottom:0%" />
+            <input type="submit" id="createBill" value="Pay" class="btn btn-warning" style="width: 180px; margin-left:auto;margin-right:auto;display:block;margin-top:auto;margin-bottom:0%" />
           </div>
         </div>
         <br />
@@ -95,6 +122,13 @@
 
 </div>
 
+<style>
+  input[readonly].classBorder0 {
+    background-color: transparent;
+    border: 0;
+    /*font-size: 1em;*/
+  }
+</style>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 @*<link rel="stylesheet" href="/resources/demos/style.css">*@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -103,9 +137,9 @@
 <script src="~/Scripts/jquery.mcautocomplete.js"></script>
 
 <script type="text/javascript">
-  var serialNum = 1;
+  var serialNum = 0;
   var clickedTextboxId = "name0";
-  var clickedIdNum = 1;
+  var clickedIdNum = 0;
   var productColumns = [{ name: 'Id', minWidth: '100px' }, { name: 'Product', minWidth: '420px' }, { name: 'Sale Price', minWidth: '150px' }, { name: 'Stock', minWidth: '100px' }];
   //var products = []; //[['Ciplet', '10', '60'], ['Gaviscon', '85', '12'], ['Surficol', '110', '8']];
   var products = new Array();
@@ -163,63 +197,70 @@
 
 
   function update_itemTotal() {
-    var ItemsTotal = 0;
-
-    var orderQty = 0;
-    var orderQtyPiece = 0;
-    var returnQty = 0;
-    var returnQtyPiece = 0;
-    var SN = 0;
-
+    var totalAmount = 0;
     $('#saleReciept > tbody  > tr').each(function () {
 
-      var prodName = $(this).find("[id^='prod']").val();
-      var myCount = 0;
-      $('#saleReciept > tbody  > tr').each(function () {
-        
-        var prodName2 = $(this).find("[id^='prod']").val();
-        if (prodName2 == prodName) {
-          myCount += 1;
-        }
+      //var prodName = $(this).find("[id^='prod']").val();
+      //var myCount = 0;
+      //$('#saleReciept > tbody  > tr').each(function () {
 
-        if (myCount > 1) {
-          alert('product already selected');
-        }
+      //  var prodName2 = $(this).find("[id^='prod']").val();
+      //  if (prodName2 == prodName) {
+      //    myCount += 1;
+      //  }
 
-      });
+      //  if (myCount > 1) {
+      //    alert('product already selected');
+      //  }
 
-
-
+      //});
 
       var qty = 0;
       var sale = 0;
+      var itemAmount = 0;
+      
         qty = $(this).find("[id^='qty']").val();
         //if (!(qty)) { qty = 0; }
         sale = $(this).find("[id^='sale']").val();
-        var itemAmount = (qty * sale);
+      itemAmount = (qty * sale);
+      totalAmount += itemAmount;
         $(this).find("[id^='amount']").val(itemAmount.toFixed(2));
-
+      
     });
+
+    $("#totalAmount").val(totalAmount.toFixed(2));
 
   }
 
 
- 
+
   $(document).ready(function () {
     bodyEvent();
 
     $("#addrow").click(function (e) {
       //alert("123");
+      if (serialNum <= 5) {
       serialNum += 1;
-      var row = '<tr id="rowNo' + serialNum + '"><td><input type="text" id="prod' + serialNum + '" class="prod" /> </td><td><input type="text" id="sale' + serialNum + '" class="sale" /> </td><td><input type="text" id="qty' + serialNum + '" class="qty" /> </td><td><input type="text" id="amount' + serialNum + '" class="amount" /> </td><td><button type="button" id="del' + serialNum + '" class="del">del</button> </td></tr>';
+        var row = '<tr id="rowNo' + serialNum + '">' +
+          '<td><input type="hidden" name="SODs.Index" value="' + serialNum + '" /></td>' +
+          '<td><input type="text" id="prod' + serialNum + '" class="prod" name="SODs[' + serialNum + '].Product.Name" /> </td>' +
+          '<td><input type="text" id="sale' + serialNum + '" class="sale" name="SODs[' + serialNum + '].Product.SalePrice" /> </td>' +
+          '<td><input type="text" id="qty' + serialNum + '" class="qty" name="SODs[' + serialNum + '].QTY" /> </td>' +
+          '<td><input type="text" id="amount' + serialNum + '" class="amount" name="SODs[' + serialNum + '].ItemTotal" readonly /> </td>' +
+          '<td><button type="button" id="del' + serialNum + '" class="del">del</button> </td>' +
+          '</tr>';
 
-      //alert(row);
+      alert(row);
 
       $("#saleReciept").append(row);
 
       bodyEvent();
       OnTypeName('#prod' + serialNum);
-
+      }
+      else{
+        alert("limit 5 reached");
+        document.getElementById('createBill').focus();
+      }
 
     });
 
@@ -240,7 +281,7 @@
 
     }
 
-    
+
 
 
   });

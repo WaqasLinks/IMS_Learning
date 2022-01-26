@@ -59,7 +59,7 @@
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="ProductId" Type="nvarchar" MaxLength="128" />
           <Property Name="QTY" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="TotalAmont" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ItemTotal" Type="decimal" Precision="18" Scale="2" />
           <Property Name="VAT" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="SODate" Type="datetime" />
@@ -221,7 +221,6 @@
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ProductId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="TotalAmont" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="VAT" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="SODate" Type="DateTime" Precision="3" />
@@ -230,6 +229,7 @@
           <NavigationProperty Name="MySO" Relationship="IMSModel.FK_SOD_MySO" FromRole="SOD" ToRole="MySO" />
           <NavigationProperty Name="Product" Relationship="IMSModel.FK_SO_Product" FromRole="SOD" ToRole="Product" />
           <Property Name="QTY" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ItemTotal" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -348,13 +348,13 @@
           <EntitySetMapping Name="SODs">
             <EntityTypeMapping TypeName="IMSModel.SOD">
               <MappingFragment StoreEntitySet="SOD">
+                <ScalarProperty Name="ItemTotal" ColumnName="ItemTotal" />
                 <ScalarProperty Name="QTY" ColumnName="QTY" />
                 <ScalarProperty Name="MySoId" ColumnName="MySoId" />
                 <ScalarProperty Name="ModfiedDate" ColumnName="ModfiedDate" />
                 <ScalarProperty Name="SODate" ColumnName="SODate" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="VAT" ColumnName="VAT" />
-                <ScalarProperty Name="TotalAmont" ColumnName="TotalAmont" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
