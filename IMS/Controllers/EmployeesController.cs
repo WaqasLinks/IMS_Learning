@@ -5,9 +5,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using IMS.CustomClasses;
 using IMSRepo.Models;
 namespace IMS.Controllers
 {
+  [LoginFilter]
   public class EmployeesController : Controller
   {
     IMSEntities db = new IMSEntities();

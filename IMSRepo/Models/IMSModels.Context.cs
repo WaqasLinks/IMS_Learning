@@ -31,5 +31,6 @@ namespace IMSRepo.Models
         public virtual DbSet<SOD> SODs { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

@@ -15,6 +15,7 @@
         <AssociationConnector Association="IMSModel.FK_Product_Supplier" />
         <AssociationConnector Association="IMSModel.FK_SO_Product" />
         <EntityTypeShape EntityType="IMSModel.Employee" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="IMSModel.User" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

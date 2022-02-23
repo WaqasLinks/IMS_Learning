@@ -216,6 +216,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
@@ -227,6 +228,12 @@
     <Compile Include="Controllers\SODsController.cs" />
     <Compile Include="Controllers\SOVMController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
+    <Compile Include="CustomClasses\LoginFilter.cs" />
+    <Compile Include="DataSets\spSOReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>spSOReport.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2142,6 +2149,17 @@
     <Content Include="composer.json" />
     <Content Include="package-lock.json" />
     <Content Include="package.json" />
+    <Content Include="DataSets\spSOReport.xsc">
+      <DependentUpon>spSOReport.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSets\spSOReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>spSOReport.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DataSets\spSOReport.xss">
+      <DependentUpon>spSOReport.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2223,6 +2241,8 @@
     <Content Include="Views\MySOes\Index.cshtml" />
     <Content Include="Views\SOVM\Index.cshtml" />
     <Content Include="Views\SOVM\Edit.cshtml" />
+    <Content Include="Views\Authentication\Login.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

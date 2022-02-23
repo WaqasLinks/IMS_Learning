@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using IMS.CustomClasses;
 using IMSRepo.Models;
 
 namespace IMS.Controllers
 {
-    public class MySOesController : Controller
+  [LoginFilter]
+  public class MySOesController : Controller
     {
         private IMSEntities db = new IMSEntities();
 

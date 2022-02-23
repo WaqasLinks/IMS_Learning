@@ -1,3 +1,4 @@
+using IMS.CustomClasses;
 using IMSRepo.Models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace IMS.Controllers
 {
+  [LoginFilter]
   public class DashboardController : Controller
   {
     IMSEntities db = new IMSEntities();

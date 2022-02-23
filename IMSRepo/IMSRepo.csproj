@@ -84,6 +84,9 @@
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>IMSModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>IMSModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SOVM.cs" />
     <Compile Include="ViewModels\Summary.cs" />

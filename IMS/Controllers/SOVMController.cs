@@ -1,3 +1,4 @@
+using IMS.CustomClasses;
 using IMSRepo.Models;
 using IMSRepo.ViewModels;
 using System;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace IMS.Controllers
 {
+  [LoginFilter]
   public class SOVMController : Controller
   {
     private IMSEntities db = new IMSEntities();

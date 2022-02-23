@@ -1,3 +1,4 @@
+using IMS.CustomClasses;
 using IMSRepo.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,8 @@ using System.Web.Mvc;
 
 namespace IMS.Controllers
 {
-    public class CustomersController : Controller
+  [LoginFilter]
+  public class CustomersController : Controller
     {
         // GET: Customers
         private IMSEntities db = new IMSEntities();
